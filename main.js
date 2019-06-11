@@ -3,7 +3,7 @@
 	COMMENT
 */
 
-while (param > 1) {
+while (param > 1){
 
 	// Comment
 	alert('11111111');

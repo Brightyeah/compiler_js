@@ -1,24 +1,26 @@
 #include "lexer.h"
 
 //LIST
-struct list *list_init(char *tok, char *data) {
+struct list *list_init(char *tok, int tok_is_num, char *data) {
   	struct list *cur_list;
   	cur_list = (struct list*)malloc(sizeof(struct list));
   	cur_list->col = current_col;
   	cur_list->row = current_row;
+  	cur_list->tok_num = tok_is_num;
   	strcpy(cur_list->tok, tok);
   	strcpy(cur_list->data, data);
   	cur_list->ptr = NULL;
   	return (cur_list);
 }
 
-struct list *list_addelem(struct list *cur_list, char *tok, char *data) {
+struct list *list_addelem(struct list *cur_list, char *tok, int tok_is_num, char *data) {
 	struct list *temp, *p;
   	temp = (struct list*)malloc(sizeof(struct list));
   	p = cur_list->ptr;
   	cur_list->ptr = temp;
   	temp->col = current_col;
   	temp->row = current_row;
+  	temp->tok_num = tok_is_num;
   	strcpy(temp->tok, tok);
   	strcpy(temp->data, data);
   	temp->ptr = p;
@@ -114,7 +116,7 @@ int lexer_check_num(FILE *file_js) {
 		strcpy(what_str, "UNDEF\0");
 		return undef_str;
 	}
-	strcpy(what_str, "numeric_constant\0");
+	strcpy(what_str, "numeric\0");
 	if (flag_for_dot == 1) {
 		id_numeric_double = strtod(id_str, 0);
 		return tok_num_double;
@@ -178,7 +180,7 @@ int lexer_check_str_two(FILE *file_js) {
 	}
 	id_str = realloc(id_str, (i+1) * sizeof(char));
 	id_str[i] = '\0';
-	strcpy(what_str, "string\0"); //\0
+	strcpy(what_str, "string\0");
 	return tok_string;
 }
 
@@ -230,8 +232,9 @@ int lexer_check_ascii(FILE *file_js) {
 		lexer_fgetc(file_js);
 		return undef_str;
 	}
+	int cur_char = last_char;
 	lexer_fgetc(file_js);
-	return last_char;
+	return cur_char;
 }
 
 int lexer(FILE *file_js) {
@@ -249,5 +252,6 @@ int lexer(FILE *file_js) {
 	else if (last_char == 39)										lexer_print = lexer_check_str_one(file_js);
 	else if (last_char == EOF) 										lexer_print = lexer_check_eof();
 	else 															lexer_print = lexer_check_ascii(file_js);
+	what_str_num = lexer_print;
 	return lexer_print;
 }

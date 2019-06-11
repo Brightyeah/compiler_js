@@ -7,7 +7,6 @@
 #include <malloc.h>
 
 enum TOKENS {
-	undef_str = -200,
 	tok_comment = 0,
 	tok_eof = -1,
 	tok_var = -2,
@@ -26,25 +25,29 @@ enum TOKENS {
 	tok_string = -101,
 	tok_num_double = -102,
 	tok_num_int = -103,
+	undef_str = -200,
 };
 
+int global_lexer_undef;
 int init;
 int counter_col, current_col, counter_row, current_row;
 int lexer_print; //для вывода
 char last_char;	//для считывания
 char *id_str, what_str[30]; //строка токена, какой токен
+int what_str_num;
 int id_numeric_int, id_numeric_double;
 
 //LIST
 struct list {
 	int col;
 	int row;
-	char tok[100];  //what_str
+	int tok_num;
+	char tok[30];  //what_str
   	char data[100]; //id_str
 	struct list *ptr;
 } ;
-struct list *list_init(char *tok, char *data);
-struct list *list_addelem(struct list *cur_list, char *tok, char *data);
+struct list *list_init(char *tok, int tok_is_num, char *data);
+struct list *list_addelem(struct list *cur_list, char *tok, int tok_is_num, char *data);
 void list_print(struct list *cur_list, char *file_char_js);
 
 //LEXER
