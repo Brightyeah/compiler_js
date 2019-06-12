@@ -11,7 +11,7 @@ int main(int argc, char *argv) {
 		return 0;
 	} else printf("\tFile is open.\n"); 
 
-//LEXER
+//LEXER with list
 	struct list *list_lexer, *list_head;
 	list_lexer = 0; list_head = 0;
 	int lexer_flag_eof = 0, flag_first_list = 0;
@@ -39,15 +39,19 @@ int main(int argc, char *argv) {
 		list_print(list_head, file_char_js);
 		printf("\n\tLexer is okey.\n\n");
     	
-//PARSER
-		parser(list_head);
+//PARSER with tree
+		struct tree *tree_parser;
+		tree_parser = tree_create();
+		parser(list_head, tree_parser);
 		if (global_parcer_error == 1) {
 			printf("\n\tParser is NOT okey.\n\n");
 		} else {
 			printf("\n\tParser is okey.\n\n");
+			walk_all(tree_parser);
 
 		}
 
 	}
+	// getchar();getchar();
 	return 0;
 }
