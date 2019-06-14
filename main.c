@@ -1,11 +1,12 @@
 #include "lexer.h"
 #include "parser.h"
+#include "table.h"
 
 int main(int argc, char *argv) {
 //OPEN FILE
 	FILE *file_js;
 	char file_char_js[] = "main.js";
-	printf("\n\tReading file %s ...\n", file_char_js);
+	printf("\tReading file %s ...\n", file_char_js);
 	if ((file_js = fopen(file_char_js, "r")) == NULL) {
 		printf("\tFile is NOT open.\n");
 		return 0;
@@ -37,7 +38,7 @@ int main(int argc, char *argv) {
 		printf("\n\tLexer is NOT okey.\n\n");
 	} else {
 		list_print(list_head, file_char_js);
-		printf("\n\tLexer is okey.\n\n");
+		printf("\n\tLexer is okey.\n");
     	
 //PARSER with tree
 		struct tree *tree_parser;
@@ -47,8 +48,14 @@ int main(int argc, char *argv) {
 			printf("\n\tParser is NOT okey.\n\n");
 		} else {
 			printf("\n\tParser is okey.\n\n");
-			walk_all(tree_parser);
+			//walk_all(tree_parser);
 
+//TABLE of symbols
+			struct table *tb_root;
+			tb_root = table_symbols(list_head);
+			if (tb_root == NULL) {
+				printf("\n\tTable is NOT okey\n\n");
+			} else table_print(tb_root);
 		}
 
 	}

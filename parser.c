@@ -62,30 +62,28 @@ int parser(struct list *list_head, struct tree *tree_parser) {
 	parser_str_prev[0] = '\0';
 	for (int flag_undef = 0, i = 0; list_parser != NULL; i++) {
 		flag_undef = parser_body(list_parser);
-
 		insert(tree_parser, list_parser->data, i);
-
 		list_parser = list_parser->ptr;
 	}
+	//если нет ошибок пройтись еще круг для списка с var this;
 	return 0;
 }
-
+int id_this_var, id_this_const;
 int parser_body(struct list *list_parser) {
 	int pnum = list_parser->tok_num;
 	int parser_col = list_parser->col;
 	int parser_row = list_parser->row;
 	int error_parser = 0;
 
-	if (pnum == tok_var || pnum == tok_const) {
+	if (pnum == tok_var) {
 		if (parser_prev == 40 || parser_prev == 41 || parser_prev == 44 || parser_prev == 59 
 			|| parser_prev == 123 || parser_prev == 125 || parser_prev == 0) {}// ( ) ; { } ,
 		else error_parser = 1;
 
 	} else if (pnum == tok_id) {
-		if (parser_prev == tok_var || parser_prev == tok_const || parser_prev == 40
-			|| parser_prev == 43 || parser_prev == 44 || parser_prev == 45 
-			|| parser_prev == 59 || parser_prev == 60 || parser_prev == 61 
-			|| parser_prev == 62 || parser_prev == 123) {}// + ( ; < = > { ,
+		if (parser_prev == tok_var || parser_prev == 40 || parser_prev == 43 || parser_prev == 44 || parser_prev == 45 
+			  || parser_prev == 59 || parser_prev == 60 || parser_prev == 61 
+			  || parser_prev == 62 || parser_prev == 123|| parser_prev == 125) {}// + ( ; < = > { ,
 		else error_parser = 1;
 
 	} else if (pnum == tok_if || pnum == tok_while || pnum == tok_alert || pnum == tok_return) {

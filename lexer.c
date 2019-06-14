@@ -76,7 +76,7 @@ int lexer_check_id(FILE *file_js) {
 	id_str[i] = '\0';
 	strcpy(what_str, "ID\0");
 	if (!strcmp(id_str, "var\0"))				return tok_var;
-	else if (!strcmp(id_str, "const\0"))		return tok_const;
+	//else if (!strcmp(id_str, "const\0"))		return tok_const;
 	else if (!strcmp(id_str, "function\0")) 	return tok_function;
 	else if (!strcmp(id_str, "if\0")) 			return tok_if;
 	else if (!strcmp(id_str, "else\0")) 		return tok_else;

@@ -16,7 +16,7 @@ enum TOKENS {
 	tok_if = -7,
 	tok_else = -8,
 	tok_return = -9,
-	tok_const = -10,
+	//tok_const = -10,
 	tok_true = -12,
 	tok_false = -13,
 
