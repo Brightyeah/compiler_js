@@ -1,6 +1,7 @@
 #include "lexer.h"
 #include "parser.h"
 #include "table.h"
+#include "asm.h"
 
 int main(int argc, char *argv) {
 //OPEN FILE
@@ -16,7 +17,7 @@ int main(int argc, char *argv) {
 	struct list *list_lexer, *list_head;
 	list_lexer = 0; list_head = 0;
 	int lexer_flag_eof = 0, flag_first_list = 0;
-	global_lexer_undef = 0;
+	global_lexer_undef = 0; flag_equals = 0;
 	counter_col = 0; current_col = 0;
 	counter_row = 1; current_row = 1;
 	while (lexer_flag_eof != tok_eof) {
@@ -35,7 +36,7 @@ int main(int argc, char *argv) {
 
 	if (global_lexer_undef == 1) {
 		list_print(list_head, file_char_js);
-		printf("\n\tLexer is NOT okey.\n\n");
+		printf("\nLexer is NOT okey.\n\n");
 	} else {
 		list_print(list_head, file_char_js);
 		printf("\n\tLexer is okey.\n");
@@ -45,17 +46,27 @@ int main(int argc, char *argv) {
 		tree_parser = tree_create();
 		parser(list_head, tree_parser);
 		if (global_parcer_error == 1) {
-			printf("\n\tParser is NOT okey.\n\n");
+			printf("\nParser is NOT okey.\n\n");
 		} else {
-			printf("\n\tParser is okey.\n\n");
 			//walk_all(tree_parser);
+			printf("\n\tParser is okey.\n\n");
 
 //TABLE of symbols
 			struct table *tb_root;
 			tb_root = table_symbols(list_head);
 			if (tb_root == NULL) {
-				printf("\n\tTable is NOT okey\n\n");
-			} else table_print(tb_root);
+				printf("\nTable is NOT okey.\n\n");
+			} else {
+			 	table_print(tb_root);
+				printf("\n\tTable is okey.\n\n");
+//ASSEMBLER
+				if (asm_func(list_head) == 1) {
+					printf("\tAssembler is okey.\n");
+				} else{
+					printf("Assembler is NOT okey.\n");
+				}
+
+			}
 		}
 
 	}

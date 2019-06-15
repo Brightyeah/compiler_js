@@ -221,7 +221,7 @@ int lexer_check_ascii(FILE *file_js) {
 	else if (last_char == 47) strcpy(what_str, "div\0");
 	else if (last_char == 59) strcpy(what_str, "semi\0");
 	else if (last_char == 60) strcpy(what_str, "less\0");
-	else if (last_char == 61) strcpy(what_str, "equal\0");
+	else if (last_char == 61) {strcpy(what_str, "equal\0"); flag_equals++;}
 	else if (last_char == 62) strcpy(what_str, "more\0");
 	else if (last_char == 91) strcpy(what_str, "l_brackets\0");
 	else if (last_char == 93) strcpy(what_str, "r_brackets\0");

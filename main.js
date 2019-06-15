@@ -2,20 +2,20 @@
 	COMMENT
 	COMMENT
 */
-var disk_$ = 3;
+// function ddd(){}
+var disk = 3;
 var param = 2;
-while (param > 1){
-	var i = 0;
+var str = "22222";
+
+while (param < 99) {
+	var i = 8;
 	// Comment
 	alert('11111111');
-	disk_$ = param + 3.125 + i;
-
-	if (disk_$ < 2.555555) {
-		alert("22222");
-		var $$$ = 5;
-	}
-
-	/* Comment 2 */
-	alert(param);
+	disk = 9;
 }
-var ttt = 0;
+
+var newa = 4;
+if (disk < 8) {
+	var asd = 5;
+}
+var ttt = 9;

@@ -36,6 +36,7 @@ char last_char;	//для считывания
 char *id_str, what_str[30]; //строка токена, какой токен
 int what_str_num;
 int id_numeric_int, id_numeric_double;
+int flag_equals;
 
 //LIST
 struct list {

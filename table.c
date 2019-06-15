@@ -43,8 +43,7 @@ void table_print(struct table *root) {
 int cmp_lt(char list[100], char tb[100]) {
 	for (int i = 0; i < 100; i++) {
 		if (list[i] == tb[i]) {
-			if (list[i] == '\0' && tb[i] == '\0')
-				return 0;
+			if (list[i] == '\0' && tb[i] == '\0') return 0;
 		} else return 1;
 	}
 	return 1;
@@ -65,19 +64,19 @@ struct table *table_symbols(struct list *list_head) {
 					tb_root = tb;
 					init = 1;
 				} else tb = table_add_elem(tb, list_parser->data, level);
-			} else {	//first meeting
+			} else if (tok_var_prev == tok_function) {
+			} else  {	//first meeting
 				int flag_have = 0;
 				struct table *tb_have;
 				tb_have = tb_root;
-				for (; tb_have != NULL; tb_have = tb_have->next) {
-					if (cmp_lt(list_parser->data, tb_have->identif) == 0 && tb_have->level <= level) {
+				for (; tb_have != NULL; tb_have = tb_have->next) {//ищу токен var
+					if ((cmp_lt(list_parser->data, tb_have->identif) == 0) && tb_have->level <= level) {
 						flag_have = global_flag_have = 1;
 						break;
 					}
 				}
-				if (flag_have == 0) {
-					printf("First meeting expr: 'var %s'\tLoc=<%d:%d>\n", list_parser->data, list_parser->row, list_parser->col);
-				}
+				if (flag_have == 0)
+					printf("1st meet expr: 'var %s'\tLoc=<%d:%d>\n", list_parser->data, list_parser->row, list_parser->col);
 			}
 
 		} else if (tb_tok_num == '{') {//добавить сколько именно вхождений
